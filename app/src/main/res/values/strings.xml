@@ -2,4 +2,8 @@
     <string name="app_name">CNC</string>
     <string name="no_message">no messages yet</string>
     <string name="text_placeholder">placeholder</string>
+    <string name="chats">Chats</string>
+    <string name="create_group">Create group</string>
+    <string name="create_chat">Create chat</string>
+    <string name="close">Close</string>
 </resources>
