@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CNC</string>
+    <string name="no_message">no messages yet</string>
+    <string name="text_placeholder">placeholder</string>
 </resources>
