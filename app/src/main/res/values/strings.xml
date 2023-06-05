@@ -2,8 +2,14 @@
     <string name="app_name">CNC</string>
     <string name="no_message">no messages yet</string>
     <string name="text_placeholder">placeholder</string>
+<<<<<<< HEAD
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friends_name">Friends</string>
+=======
     <string name="chats">Chats</string>
     <string name="create_group">Create group</string>
     <string name="create_chat">Create chat</string>
     <string name="close">Close</string>
+>>>>>>> e2ace05a360092caacde95ce91a0bf44c7a1cd4b
 </resources>
