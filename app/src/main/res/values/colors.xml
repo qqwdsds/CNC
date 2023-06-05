@@ -3,6 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#828282</color>
+<<<<<<< HEAD
+    <color name="chat_item_color">#E6E6E6</color>
+=======
     <color name="perwinkle">#B7C0EE</color>
     <color name="teagrean">#CBF3D2</color>
+>>>>>>> f61bd146c208bc015e78251d2dfd6edd25ce0f1b
 </resources>
