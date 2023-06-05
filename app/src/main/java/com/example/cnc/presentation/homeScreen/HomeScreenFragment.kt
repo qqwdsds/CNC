@@ -1,4 +1,4 @@
-package com.example.cnc.presentation.homeScreenFragment
+package com.example.cnc.presentation.homeScreen
 
 import androidx.fragment.app.Fragment
 import com.example.cnc.R
