@@ -120,6 +120,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:animationCache="@+id/rv_chat"
         android:layout_width="match_parent"
