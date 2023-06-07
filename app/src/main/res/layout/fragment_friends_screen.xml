@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="20dp">
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/add_friend_button"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginEnd="10dp"
@@ -23,28 +24,29 @@
             app:layout_constraintTop_toTopOf="@+id/close_window_button" >
 
 
-            <ImageButton
-                android:id="@+id/imageButton"
+            <ImageView
+                android:id="@+id/add_friend_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
                 android:backgroundTint="@android:color/transparent"
-                android:layout_gravity="start"
-
                 android:src="@android:drawable/ic_input_add" />
+
             <TextView
+                android:id="@+id/add_friend_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:text="Add friend"
                 android:textSize="22sp"
                 android:fontFamily="@font/font_nunito_semi_bold"
-                android:layout_gravity="end"
-                />
-        </FrameLayout>
+                android:layout_gravity="end" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/chat_text"
+            android:id="@+id/friends_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -65,10 +67,10 @@
             android:padding="15dp"
             android:scaleType="fitCenter"
             android:src = "@drawable/window_exit_image"
-            app:layout_constraintBottom_toBottomOf="@+id/chat_text"
+            android:contentDescription="@string/close"
+            app:layout_constraintBottom_toBottomOf="@+id/friends_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/chat_text" />
-        <!--            android:contentDescription="@string/close"/>-->
+            app:layout_constraintTop_toTopOf="@+id/friends_text" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
@@ -76,10 +78,11 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="@id/close_window_button"
-            app:layout_constraintStart_toStartOf="@id/chat_text"
+            app:layout_constraintStart_toStartOf="@id/friends_text"
             app:layout_constraintTop_toBottomOf="@id/barrier">
 
             <SearchView
+                android:id="@+id/search_friends"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/chat_item_color"
@@ -94,12 +97,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="chat_text, create_group_button, create_chat_button, close_window_button" />
+            app:constraint_referenced_ids="friends_text, add_friend_button, close_window_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chats"
+        android:id="@+id/rv_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/chat_item" />
