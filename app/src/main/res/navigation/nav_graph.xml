@@ -12,10 +12,26 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_chatsFragment"
             app:destination="@id/chatsFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_friendsScreenFragment"
+            app:destination="@id/friendsScreenFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_favouritesScreenFragment"
+            app:destination="@id/favouritesScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatsFragment"
         android:name="com.example.cnc.presentation.chats.ChatsFragment"
         android:label="fragment_chats"
         tools:layout="@layout/fragment_chats" />
+    <fragment
+        android:id="@+id/favouritesScreenFragment"
+        android:name="com.example.cnc.presentation.favouritesScreen.FavouritesScreenFragment"
+        android:label="fragment_favourite_sceen"
+        tools:layout="@layout/fragment_favourite_sceen" />
+    <fragment
+        android:id="@+id/friendsScreenFragment"
+        android:name="com.example.cnc.presentation.friendsScreen.FriendsScreenFragment"
+        android:label="fragment_friends_screen"
+        tools:layout="@layout/fragment_friends_screen" />
 </navigation>

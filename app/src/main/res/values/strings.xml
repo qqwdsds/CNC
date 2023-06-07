@@ -4,15 +4,9 @@
     <string name="text_placeholder">placeholder</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="friends_name">Friends</string>
-    =======
     <string name="chats">Chats</string>
     <string name="create_group">Create group</string>
     <string name="create_chat">Create chat</string>
     <string name="close">Close</string>
-    <string name="sign_in">Sign in</string>
-    <string name="username_or_email">Username or email</string>
-    <string name="remember_me">Remember me</string>
-    <string name="login_with_your_social_media_account">Login with your social media account</string>
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="register_now">Register now!</string>
+    >
 </resources>
