@@ -35,5 +35,8 @@ class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
         binding.imgBtnFriends.setOnClickListener{
             findNavController().navigate(R.id.action_homeScreenFragment_to_friendsScreenFragment)
         }
+        binding.imgBtnOff.setOnClickListener{
+            findNavController().navigate(R.id.action_homeScreenFragment_to_signScreenFragment2)
+        }
     }// end onViewCreated
 }

@@ -24,6 +24,9 @@
             app:destination="@id/favouritesScreenFragment"
             app:enterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_signScreenFragment2"
+            app:destination="@id/signScreenFragment2" />
     </fragment>
     <fragment
         android:id="@+id/chatsFragment"

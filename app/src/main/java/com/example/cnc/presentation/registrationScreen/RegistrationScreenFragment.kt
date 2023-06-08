@@ -17,6 +17,7 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = com.example.cnc.databinding.FragmentRegistrationScreenBinding.inflate(inflater)
         return binding.root
     }
 
