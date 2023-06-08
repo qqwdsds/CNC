@@ -40,4 +40,25 @@
         android:name="com.example.cnc.presentation.friendsScreen.FriendsScreenFragment"
         android:label="fragment_friends_screen"
         tools:layout="@layout/fragment_friends_screen" />
+    <fragment
+        android:id="@+id/signScreenFragment2"
+        android:name="com.example.cnc.presentation.signScreen.SignScreenFragment"
+        android:label="fragment_sign_screen"
+        tools:layout="@layout/fragment_sign_screen" >
+        <action
+            android:id="@+id/action_signScreenFragment2_to_registrationScreenFragment"
+            app:destination="@id/registrationScreenFragment" />
+        <action
+            android:id="@+id/action_signScreenFragment2_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationScreenFragment"
+        android:name="com.example.cnc.presentation.registrationScreen.RegistrationScreenFragment"
+        android:label="fragment_registration_screen"
+        tools:layout="@layout/fragment_registration_screen" >
+        <action
+            android:id="@+id/action_registrationScreenFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
 </navigation>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".presentation.registrationScreen.RegistrationScreenFragment">
+    tools:context=".presentation.signScreen.SignScreenFragment">
 
     <ImageView
         android:id="@+id/imageView3"
