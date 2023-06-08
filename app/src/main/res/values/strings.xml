@@ -8,5 +8,7 @@
     <string name="create_group">Create group</string>
     <string name="create_chat">Create chat</string>
     <string name="close">Close</string>
-    >
+    <string name="popup_menu_chat">Chat</string>
+    <string name="popup_menu_info">Info</string>
+    <string name="popup_menu_delete">Delete</string>
 </resources>

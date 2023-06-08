@@ -25,7 +25,7 @@ class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
 
         binding.imgBtnChatAll.setOnClickListener{
             Log.d(TAG, "try to open chats fragment")
-            findNavController().navigate(R.id.action_homeScreenFragment_to_chatsFragment)
+            findNavController().navigate(R.id.action_homeScreenFragment_to_chatsFragment, )
         }
 
         binding.imgBtnFavourites.setOnClickListener{

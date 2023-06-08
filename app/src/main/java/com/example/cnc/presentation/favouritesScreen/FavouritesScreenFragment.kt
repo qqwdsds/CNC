@@ -24,5 +24,5 @@ class FavouritesScreenFragment : Fragment(R.layout.fragment_favourite_sceen) {
         binding.closeWindowButton.setOnClickListener{
             findNavController().popBackStack()
         }
-    }
+    }// end onViewCreated
 }
