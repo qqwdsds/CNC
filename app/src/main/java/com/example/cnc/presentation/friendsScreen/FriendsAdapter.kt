@@ -20,6 +20,7 @@ class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDif
         val inflater = LayoutInflater.from(parent.context)
         val binding = FriendsItemBinding.inflate(inflater)
         binding.moreButton.setOnClickListener(this)
+        binding.root.setOnClickListener(this)
         return FriendsHolder(binding)
     }// end onCreateViewHolder
 
