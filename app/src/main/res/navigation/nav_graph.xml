@@ -13,17 +13,20 @@
             android:id="@+id/action_homeScreenFragment_to_chatsFragment"
             app:destination="@id/chatsFragment"
             app:enterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeScreenFragment_to_friendsScreenFragment"
             app:destination="@id/friendsScreenFragment"
             app:enterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeScreenFragment_to_favouritesScreenFragment"
             app:destination="@id/favouritesScreenFragment"
             app:enterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeScreenFragment_to_signScreenFragment2"
             app:destination="@id/signScreenFragment2" />

@@ -60,11 +60,11 @@
         android:id="@+id/more_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@color/chat_item_color"
+        android:background="@null"
         android:src="@drawable/ic_more"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/user_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/user_avatar"/>
 
     <View
         android:layout_width="match_parent"
