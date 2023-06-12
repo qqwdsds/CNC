@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/signScreenFragment">
+
+    <fragment
+        android:id="@+id/signScreenFragment"
+        android:name="com.example.cnc.presentation.signinScreen.SignInScreenFragment"
+        android:label="fragment_sign_screen"
+        tools:layout="@layout/fragment_sign_screen" >
+        <action
+            android:id="@+id/action_signScreenFragment_to_registrationScreenFragment2"
+            app:destination="@id/registrationScreenFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationScreenFragment2"
+        android:name="com.example.cnc.presentation.registrationScreen.RegistrationScreenFragment"
+        android:label="fragment_registration_screen"
+        tools:layout="@layout/fragment_registration_screen" />
+</navigation>

@@ -1,5 +1,6 @@
 package com.example.cnc.presentation.registrationScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cnc.R
 import com.example.cnc.databinding.FragmentRegistrationScreenBinding
+import com.example.cnc.presentation.MainActivity
 
 class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_screen) {
     private lateinit var binding : FragmentRegistrationScreenBinding
@@ -17,7 +19,7 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = com.example.cnc.databinding.FragmentRegistrationScreenBinding.inflate(inflater)
+        binding = FragmentRegistrationScreenBinding.inflate(inflater)
         return binding.root
     }
 
@@ -25,10 +27,12 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
         super.onViewCreated(view, savedInstanceState)
         with(binding){
             btnRegister.setOnClickListener {
-                findNavController().popBackStack()
+                val mainActivity = Intent(requireContext() ,MainActivity::class.java)
+                startActivity(mainActivity)
+                activity?.finish()
             }
             btnSign.setOnClickListener {
-                findNavController().navigate(R.id.action_registrationScreenFragment_to_homeScreenFragment)
+                findNavController().popBackStack()
             }
         }
     }

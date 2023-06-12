@@ -1,5 +1,6 @@
 package com.example.cnc.presentation.homeScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cnc.R
 import com.example.cnc.databinding.FragmentHomeScreenBinding
+import com.example.cnc.presentation.LogRegActivity
 
 private val TAG = "Here"
 class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
@@ -36,7 +38,9 @@ class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
             findNavController().navigate(R.id.action_homeScreenFragment_to_friendsScreenFragment)
         }
         binding.imgBtnOff.setOnClickListener{
-            findNavController().navigate(R.id.action_homeScreenFragment_to_signScreenFragment2)
+            val logregScreen = Intent(requireContext(), LogRegActivity::class.java)
+            startActivity(logregScreen)
+            activity?.finish()
         }
     }// end onViewCreated
 }

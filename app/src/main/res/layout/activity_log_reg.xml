@@ -7,5 +7,5 @@
     android:id="@+id/fragmentContainer"
     android:name="androidx.navigation.fragment.NavHostFragment"
     app:defaultNavHost="true"
-    app:navGraph="@navigation/main_nav_graph"
-    tools:context=".presentation.MainActivity"/>
+    app:navGraph="@navigation/logreg_nav_graph"
+    tools:context=".presentation.LogRegActivity"/>
