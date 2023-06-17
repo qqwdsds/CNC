@@ -64,61 +64,71 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
     }
 
     private fun isCheckedField() {
+        var result =false
         with(binding) {
-            btnLogin.setOnClickListener {
-                if (isTextInputLayoutEmpty(textInputFirstName) || isTextInputLayoutEmpty(
-                        textInputEmail
-                    ) || isTextInputLayoutEmpty(textInputLayoutPassword) || isTextInputLayoutEmpty(
-                        textInputLayoutRepeatPassword
-                    )
-                ) {
-                    Toast.makeText(context, "Hmm 🤔, not all fields are filled", Toast.LENGTH_SHORT)
-                        .show()
+            btnRegister.setOnClickListener {
+                if (checkPasswordRepeatPassword() && checkEmail() && result) {
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    activity?.finish()
+                } else {
+                    if (isTextInputLayoutEmpty(textInputFirstName)) textInputFirstName.error =
+                        "This field is empty " else {textInputFirstName.error = null
+                        result= true}
+                    checkPasswordRepeatPassword()
+                    checkEmail()
                 }
-                checkPasswordRepeatPassword()
-                checkEmail()
             }
         }
     }
 
-    private fun checkEmail() {
+    private fun checkEmail(): Boolean {
+        var result = false
         val email = binding.textInputEmail.editText?.text.toString()
-        if (!email.contains("@gmail.com")) {
-            Toast.makeText(context, "Error 😬, such mail does not exist ", Toast.LENGTH_SHORT)
-                .show()
+        if (!email.contains("@gmail.com") || email.isEmpty())
+            binding.textInputEmail.error = "Email is wrong"
+        else {
+            binding.textInputEmail.error = null
+            result = true
         }
+        return result
     }
 
-    private fun checkPasswordRepeatPassword() {
+    private fun checkPasswordRepeatPassword(): Boolean {
+        var result = false
         binding.apply {
             val text1 = textInputLayoutPassword.editText?.text.toString()
             val text2 = textInputLayoutRepeatPassword.editText?.text.toString()
             if (text1 != text2) {
-                Toast.makeText(context, "Upps 🙁, your Passwords do not match", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            if(textInputLayoutPassword.editText?.text.toString().length<9)
+                textInputLayoutPassword.error = "Upps 🙁, your Passwords do not match"
+                textInputLayoutRepeatPassword.error = "Upps 🙁, your Passwords do not match"
+            }else
+            if (text1.length < 9 && text2.length < 9){
                 textInputLayoutPassword.error = "More than 8 characters are required"
+                textInputLayoutRepeatPassword.error = "More than 8 characters are required"}
+            else result =true
 
-            if(textInputLayoutRepeatPassword.editText?.text.toString().length<9)
-                textInputLayoutRepeatPassword.error = "More than 8 characters are required"
-
-            textInputPassword.doOnTextChanged{
-                text, start, before, count ->
-                if(text!!.length<9){
+            textInputPassword.doOnTextChanged { text, start, before, count ->
+                if (text!!.length < 9) {
                     binding.textInputLayoutPassword.error = "More than 8 characters are required"
-                }else if(text!!.length>9){
-                    binding.textInputLayoutPassword.error = null
+                } else {
+                    if (text.length > 8) {
+                        binding.textInputLayoutPassword.error = null
+                        result = true
+                    }
                 }
             }
-            textInputRepeatPassword.doOnTextChanged{
-                text, start, before, count ->
-                if(text!!.length<9){
-                    binding.textInputLayoutRepeatPassword.error = "More than 8 characters are required"
-                }else if(text!!.length>9) {
-                    binding.textInputLayoutRepeatPassword.error = null
+            textInputRepeatPassword.doOnTextChanged { text, start, before, count ->
+                if (text!!.length < 9) {
+                    binding.textInputLayoutRepeatPassword.error =
+                        "More than 8 characters are required"
+                } else {
+                    if (text.length > 8) {
+                        binding.textInputLayoutRepeatPassword.error = null
+                        result = true
+                    }
                 }
             }
+            return result
         }
     }
 
