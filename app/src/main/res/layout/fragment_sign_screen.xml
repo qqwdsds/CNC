@@ -12,7 +12,7 @@
         android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#152534"
+        android:background="@drawable/bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:fontFamily="@font/font_nunito_semi_bold"
         android:text="Sign in to your \nAccount"
         android:textColor="@color/white"
@@ -92,14 +92,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputPassword" />
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnLogin"
         style="@style/botton_style"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#C0E862"
         android:fontFamily="@font/font_nunito_bold"
-        android:text="Register"
+        android:text="Log in"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/textInputPassword"
@@ -127,7 +127,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <View
         android:id="@+id/view6"

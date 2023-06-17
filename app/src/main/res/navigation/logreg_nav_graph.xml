@@ -11,12 +11,20 @@
         android:label="fragment_sign_screen"
         tools:layout="@layout/fragment_sign_screen" >
         <action
-            android:id="@+id/action_signScreenFragment_to_registrationScreenFragment2"
-            app:destination="@id/registrationScreenFragment2" />
+            android:id="@+id/action_signScreenFragment_to_registrationScreenFragment"
+            app:destination="@id/registrationScreenFragment" />
+        <action
+            android:id="@+id/action_signScreenFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/registrationScreenFragment2"
+        android:id="@+id/registrationScreenFragment"
         android:name="com.example.cnc.presentation.registrationScreen.RegistrationScreenFragment"
         android:label="fragment_registration_screen"
         tools:layout="@layout/fragment_registration_screen" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.cnc.presentation.forgotPasswordScreen.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
 </navigation>

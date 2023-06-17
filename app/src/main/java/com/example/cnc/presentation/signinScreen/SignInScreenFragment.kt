@@ -1,7 +1,6 @@
 package com.example.cnc.presentation.signinScreen
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cnc.R
 import com.example.cnc.databinding.FragmentSignScreenBinding
-import com.example.cnc.presentation.MainActivity
 
 class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
     private lateinit var binding: FragmentSignScreenBinding
@@ -27,8 +25,15 @@ class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvSetColorRegister()
+        navigat()
+    }
+
+    private fun navigat(){
         binding.tvRegister.setOnClickListener{
-            findNavController().navigate(R.id.action_signScreenFragment_to_registrationScreenFragment2)
+            findNavController().navigate(R.id.action_signScreenFragment_to_registrationScreenFragment)
+        }
+        binding.tvForgotPassword.setOnClickListener{
+            findNavController().navigate(R.id.action_signScreenFragment_to_forgotPasswordFragment)
         }
     }
     private fun tvSetColorRegister(){
