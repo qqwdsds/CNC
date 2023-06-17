@@ -97,19 +97,25 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
                 Toast.makeText(context, "Upps 🙁, your Passwords do not match", Toast.LENGTH_SHORT)
                     .show()
             }
+            if(textInputLayoutPassword.editText?.text.toString().length<9)
+                textInputLayoutPassword.error = "More than 8 characters are required"
+
+            if(textInputLayoutRepeatPassword.editText?.text.toString().length<9)
+                textInputLayoutRepeatPassword.error = "More than 8 characters are required"
+
             textInputPassword.doOnTextChanged{
                 text, start, before, count ->
-                if(text!!.length<=8){
+                if(text!!.length<9){
                     binding.textInputLayoutPassword.error = "More than 8 characters are required"
-                }else if(text!!.length>8){
+                }else if(text!!.length>9){
                     binding.textInputLayoutPassword.error = null
                 }
             }
             textInputRepeatPassword.doOnTextChanged{
                 text, start, before, count ->
-                if(text!!.length<=8){
+                if(text!!.length<9){
                     binding.textInputLayoutRepeatPassword.error = "More than 8 characters are required"
-                }else if(text!!.length>8) {
+                }else if(text!!.length>9) {
                     binding.textInputLayoutRepeatPassword.error = null
                 }
             }

@@ -9,6 +9,8 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cnc.R
@@ -26,8 +28,30 @@ class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
         super.onViewCreated(view, savedInstanceState)
         tvSetColorRegister()
         navigat()
+        binding.btnLogin.setOnClickListener {
+            if(binding.textInputLayoutPassword.editText?.text.toString().length<9)
+                binding.textInputLayoutPassword.error = "More than 8 characters are required"
+            checkPassword()
+            checkEmail()
+        }
     }
-
+    private fun checkEmail() {
+        val email = binding.textInputEmail.editText?.text.toString()
+        if (!email.contains("@gmail.com")) {
+            Toast.makeText(context, "Error 😬, such mail does not exist ", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+    private fun checkPassword(){
+        binding.textInputPassword.doOnTextChanged{
+                text, start, before, count ->
+            if(text!!.length<9){
+                binding.textInputLayoutPassword.error = "More than 8 characters are required"
+            }else if(text!!.length>9){
+                binding.textInputLayoutPassword.error = null
+            }
+        }
+    }
     private fun navigat(){
         binding.tvRegister.setOnClickListener{
             findNavController().navigate(R.id.action_signScreenFragment_to_registrationScreenFragment)
