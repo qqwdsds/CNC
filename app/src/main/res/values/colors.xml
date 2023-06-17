@@ -6,5 +6,8 @@
     <color name="chat_item_color">#E6E6E6</color>
     <color name="perwinkle">#B7C0EE</color>
     <color name="teagrean">#CBF3D2</color>
+    <color name="light_white">#A6A6A6</color>
+    <color name="light_green">#C0E862</color>
+    <color name="green">#99BC47</color>
 
 </resources>
