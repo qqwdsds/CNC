@@ -61,7 +61,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputPassword"
+        android:id="@+id/textInputLayoutPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -88,8 +88,8 @@
         android:text="Forgot Password?"
         android:textColor="@color/green"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textInputPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -102,8 +102,8 @@
         android:text="Log in"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputPassword"
-        app:layout_constraintStart_toStartOf="@+id/textInputPassword"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
 
     <View

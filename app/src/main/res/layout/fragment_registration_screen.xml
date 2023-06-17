@@ -75,16 +75,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputPassword"
+        android:id="@+id/textInputLayoutPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@drawable/error"
+        app:counterEnabled="true"
+        app:helperText="at least 8 characters"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
 
         <com.google.android.material.textfield.TextInputEditText
+           android:id="@+id/textInputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -92,16 +97,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayoutRepeatPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:errorIconDrawable="@drawable/error"
+        app:counterEnabled="true"
+        app:helperText="at least 8 characters"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputPassword">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Repeat password"
@@ -119,9 +128,9 @@
         android:text="Register"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutRepeatPassword"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutRepeatPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutRepeatPassword" />
 
     <TextView
         android:id="@+id/tvIHAALogin"
