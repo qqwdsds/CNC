@@ -1,17 +1,10 @@
 package com.example.cnc.presentation.registrationScreen
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isEmpty
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -34,35 +27,11 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvSetColorLogin()
         binding.tvIHAALogin.setOnClickListener {
             findNavController().popBackStack()
         }
         isCheckedField()
     }
-
-    private fun tvSetColorLogin() {
-        val spannableStringBuilder = SpannableStringBuilder("I have an account? Log in")
-
-        val colorSpan1 = ForegroundColorSpan(Color.BLACK)
-        val colorSpan2 = ForegroundColorSpan(Color.parseColor("#99BC47"))
-
-        spannableStringBuilder.setSpan(
-            colorSpan1,
-            0,
-            "I have an account?".length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        spannableStringBuilder.setSpan(
-            colorSpan2,
-            "I have an account?".length,
-            "I have an account?".length + " Log in".length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        binding.tvIHAALogin.text = spannableStringBuilder
-    }
-
     private fun isCheckedField() {
         var result =false
         with(binding) {
@@ -72,7 +41,7 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
                     activity?.finish()
                 } else {
                     if (isTextInputLayoutEmpty(textInputFirstName)) textInputFirstName.error =
-                        "This field is empty " else {textInputFirstName.error = null
+                        getString(R.string.field_empty_error) else {textInputFirstName.error = null
                         result= true}
                     checkPasswordRepeatPassword()
                     checkEmail()
@@ -84,8 +53,8 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
     private fun checkEmail(): Boolean {
         var result = false
         val email = binding.textInputEmail.editText?.text.toString()
-        if (!email.contains("@gmail.com") || email.isEmpty())
-            binding.textInputEmail.error = "Email is wrong"
+        if (!email.contains(getString(R.string.mail_domain)) || email.isEmpty())
+            binding.textInputEmail.error = getString(R.string.wrong_email)
         else {
             binding.textInputEmail.error = null
             result = true
@@ -99,17 +68,17 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
             val text1 = textInputLayoutPassword.editText?.text.toString()
             val text2 = textInputLayoutRepeatPassword.editText?.text.toString()
             if (text1 != text2) {
-                textInputLayoutPassword.error = "Upps 🙁, your Passwords do not match"
-                textInputLayoutRepeatPassword.error = "Upps 🙁, your Passwords do not match"
+                textInputLayoutPassword.error = getString(R.string.passwords_not_match_error)
+                textInputLayoutRepeatPassword.error = getString(R.string.passwords_not_match_error)
             }else
             if (text1.length < 9 && text2.length < 9){
-                textInputLayoutPassword.error = "More than 8 characters are required"
-                textInputLayoutRepeatPassword.error = "More than 8 characters are required"}
+                textInputLayoutPassword.error = getString(R.string.small_password_error)
+                textInputLayoutRepeatPassword.error = getString(R.string.small_password_error)}
             else result =true
 
             textInputPassword.doOnTextChanged { text, start, before, count ->
                 if (text!!.length < 9) {
-                    binding.textInputLayoutPassword.error = "More than 8 characters are required"
+                    binding.textInputLayoutPassword.error = getString(R.string.small_password_error)
                 } else {
                     if (text.length > 8) {
                         binding.textInputLayoutPassword.error = null
@@ -120,7 +89,7 @@ class RegistrationScreenFragment : Fragment(R.layout.fragment_registration_scree
             textInputRepeatPassword.doOnTextChanged { text, start, before, count ->
                 if (text!!.length < 9) {
                     binding.textInputLayoutRepeatPassword.error =
-                        "More than 8 characters are required"
+                        getString(R.string.small_password_error)
                 } else {
                     if (text.length > 8) {
                         binding.textInputLayoutRepeatPassword.error = null

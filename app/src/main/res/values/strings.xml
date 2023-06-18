@@ -15,14 +15,19 @@
     <string name="username_or_email">Username or email</string>
     <string name="remember_me">Remember me</string>
     <string name="login_with_your_social_media_account">Login with your social media account</string>
-    <string name="don_t_have_an_account">Don\'t have an account</string>
     <string name="register_now">Register now</string>
     <string name="email">Email</string>
-    <string name="already_have_account">Already have account?</string>
     <string name="register">Register</string>
-    <string name="gmailcom">\@gmail.com</string>
+    <string name="mail_domain">\@gmail.com</string>
     <string name="password">Password</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
     <string name="create_account">Create account</string>
+    <string name="dont_have_account">Don\'t have an account? <font color="#99BC47">Register</font></string>
+    <string name="have_account">Already have an account? <font color="#99BC47">Log in</font></string>
+    <string name="small_password_error">More than 8 characters are required</string>
+    <string name="mail_not_exist_error">"Error 😬, such mail does not exist "</string>
+    <string name="wrong_email">Email is wrong</string>
+    <string name="passwords_not_match_error">Upps 🙁, your Passwords do not match</string>
+    <string name="field_empty_error">"This field is empty "</string>
 </resources>
