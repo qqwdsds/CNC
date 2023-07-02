@@ -6,7 +6,7 @@
     app:startDestination="@id/homeScreenFragment">
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.cnc.presentation.homeScreen.HomeScreenFragment"
+        android:name="com.messenger.cnc.presentation.homeScreen.HomeScreenFragment"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" >
         <action
@@ -30,17 +30,17 @@
     </fragment>
     <fragment
         android:id="@+id/chatsFragment"
-        android:name="com.example.cnc.presentation.chats.ChatsFragment"
+        android:name="com.messenger.cnc.presentation.chats.ChatsFragment"
         android:label="fragment_chats"
         tools:layout="@layout/fragment_chats" />
     <fragment
         android:id="@+id/favouritesScreenFragment"
-        android:name="com.example.cnc.presentation.favouritesScreen.FavouritesScreenFragment"
+        android:name="com.messenger.cnc.presentation.favouritesScreen.FavouritesScreenFragment"
         android:label="fragment_favourite_sceen"
         tools:layout="@layout/fragment_favourite_sceen" />
     <fragment
         android:id="@+id/friendsScreenFragment"
-        android:name="com.example.cnc.presentation.friendsScreen.FriendsScreenFragment"
+        android:name="com.messenger.cnc.presentation.friendsScreen.FriendsScreenFragment"
         android:label="fragment_friends_screen"
         tools:layout="@layout/fragment_friends_screen" />
 </navigation>

@@ -1,14 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'com.example.cnc'
+    namespace 'com.messenger.cnc'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.cnc"
+        applicationId "com.messenger.cnc"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -47,10 +48,16 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //navigation
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
+
+    // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    //circle imageview
+    // circle imageview
     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
 }

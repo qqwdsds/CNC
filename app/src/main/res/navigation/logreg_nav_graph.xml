@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signScreenFragment"
-        android:name="com.example.cnc.presentation.signinScreen.SignInScreenFragment"
+        android:name="com.messenger.cnc.presentation.signinScreen.SignInScreenFragment"
         android:label="fragment_sign_screen"
         tools:layout="@layout/fragment_sign_screen" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/registrationScreenFragment"
-        android:name="com.example.cnc.presentation.registrationScreen.RegistrationScreenFragment"
+        android:name="com.messenger.cnc.presentation.registrationScreen.RegistrationScreenFragment"
         android:label="fragment_registration_screen"
         tools:layout="@layout/fragment_registration_screen" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.cnc.presentation.forgotPasswordScreen.ForgotPasswordFragment"
+        android:name="com.messenger.cnc.presentation.forgotPasswordScreen.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
 </navigation>
