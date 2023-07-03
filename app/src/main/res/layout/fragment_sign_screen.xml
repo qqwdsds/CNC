@@ -19,12 +19,12 @@
 
     <TextView
         android:id="@+id/signinText"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="80dp"
         android:fontFamily="@font/font_nunito_semi_bold"
-        android:text="Sign in to your \nAccount"
+        android:text="@string/sign_in_to_your_account"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_nunito_semi_bold"
-        android:text="Sign in to your Account"
+        android:text="@string/sign_in_to_your_account"
         android:textColor="@color/light_white"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/signinText"
@@ -58,7 +58,7 @@
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +82,7 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/font_nunito_bold"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textColor="@color/green"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditTextLayout"
@@ -106,7 +106,7 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="#C0E862"
         android:fontFamily="@font/font_nunito_bold"
-        android:text="Log in"
+        android:text="@string/log_in"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditTextLayout"
@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/font_nunito_semi_bold"
-        android:text="Or login with"
+        android:text="@string/or_login_with"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/font_nunito_bold"
-            android:text="Google"
+            android:text="@string/google"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/font_nunito_bold"
-            android:text="Facebook"
+            android:text="@string/facebook"
             android:textSize="18sp" />
     </LinearLayout>
 

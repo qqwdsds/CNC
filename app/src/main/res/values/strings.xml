@@ -22,7 +22,7 @@
     <string name="password">Password</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
-    <string name="create_account">Create account</string>
+    <string name="create_account">Create your account</string>
     <string name="dont_have_account">Don\'t have an account? <font color="#99BC47">Register</font></string>
     <string name="have_account">Already have an account? <font color="#99BC47">Log in</font></string>
     <string name="small_password_error">More than 8 characters are required</string>
@@ -30,4 +30,12 @@
     <string name="wrong_email">Email is wrong</string>
     <string name="passwords_not_match_error">Upps 🙁, your Passwords do not match</string>
     <string name="field_empty_error">"This field is empty"</string>
+    <string name="name">Name</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_in_to_your_account">Sign in to your Account</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="log_in">Log in</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="or_login_with">Or login with</string>
 </resources>

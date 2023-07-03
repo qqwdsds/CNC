@@ -6,15 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentSignScreenBinding
+import com.messenger.cnc.domain.BaseFragment
 import com.messenger.cnc.presentation.MainActivity
 
-class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
+class SignInScreenFragment : BaseFragment() {
     private lateinit var binding: FragmentSignScreenBinding
+    override val viewModel: ViewModel
+        get() = TODO("Not yet implemented")
 
     override fun onCreateView(
         inflater: LayoutInflater,

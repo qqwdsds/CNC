@@ -36,9 +36,9 @@ class FriendsScreenFragment :Fragment(R.layout.fragment_friends_screen) {
         binding.rvFriends.adapter = adapter
         binding.rvFriends.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter.submitList(mutableListOf(
+        /*adapter.submitList(mutableListOf(
             User(0, "Vladik", "Chokoladik", ""),
             User(1, "Igor", "Yosip",""),
-            User(2, "Me", "Rija mavpa","")))
+            User(2, "Me", "Rija mavpa","")))*/
     }// end setupFriendsList
 }
