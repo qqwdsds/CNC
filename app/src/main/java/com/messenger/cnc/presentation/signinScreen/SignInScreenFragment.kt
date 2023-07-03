@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,36 +31,23 @@ class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
         super.onViewCreated(
             view,
             savedInstanceState)
-        navigate()
-        checkLogin()
+        setupNavigation()
+        setupViews()
     }
 
-    private fun checkLogin() {
+    private fun setupViews() {
+        binding.passwordEditText.doOnTextChanged { _, _, _, _ ->
+            if (binding.passwordEditTextLayout.error != null)
+                binding.passwordEditTextLayout.error = null
+        }
+
+        binding.emailEditText.doOnTextChanged { _, _, _, _ ->
+            if (binding.emailEditTextLayout.error != null)
+                binding.emailEditTextLayout.error = null
+        }
+
         binding.btnLogin.setOnClickListener {
-            val inputPassword = binding.textInputLayoutPassword.editText?.text.toString()
-            val inputEmail = binding.textInputEmail.editText?.text.toString()
-
-            if (inputPassword.length < 9) {
-                binding.textInputLayoutPassword.error = getString(R.string.small_password_error)
-
-                binding.textInputPassword.doOnTextChanged { text, start, before, count ->
-                    if (text!!.length < 9) {
-                        binding.textInputLayoutPassword.error =
-                            getString(R.string.small_password_error)
-                    }
-                    else if (text!!.length > 9) {
-                        binding.textInputLayoutPassword.error = null
-                    }
-                }
-            }
-            else if (!inputEmail.contains(getString(R.string.mail_domain))) {
-                Toast.makeText(
-                    context,
-                    getString(R.string.mail_not_exist_error),
-                    Toast.LENGTH_SHORT).show()
-                binding.textInputEmail.error = getString(R.string.wrong_email)
-            }
-            else {
+            if(checkDataValidation()) {
                 startActivity(
                     Intent(
                         requireContext(),
@@ -72,7 +58,35 @@ class SignInScreenFragment : Fragment(R.layout.fragment_sign_screen) {
 
     } // end checkLogin
 
-    private fun navigate() {
+    private fun checkDataValidation(): Boolean {
+        val inputEmail = binding.emailEditText.text.toString()
+        val inputPassword = binding.passwordEditText.text.toString()
+        var isValid = true
+
+        // email
+        if (inputEmail.isBlank()) {
+            binding.emailEditTextLayout.error = getString(R.string.field_empty_error)
+            isValid = false
+        }
+        else if (!inputEmail.contains(getString(R.string.mail_domain))) {
+            binding.emailEditTextLayout.error = getString(R.string.wrong_email)
+            isValid = false
+        }
+
+        // password
+        if (inputPassword.isBlank()){
+            binding.passwordEditTextLayout.error = getString(R.string.field_empty_error)
+            isValid = false
+        }
+        else if (inputPassword.length < 9) {
+            binding.passwordEditTextLayout.error = getString(R.string.small_password_error)
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    private fun setupNavigation() {
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_signScreenFragment_to_registrationScreenFragment)
         }
