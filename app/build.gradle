@@ -37,12 +37,12 @@ android {
 }
 
 dependencies {
-    var nav_version = "2.5.3"
+    var nav_version = "2.6.0"
     var circleimageview_version = "3.1.0"
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -63,4 +63,7 @@ dependencies {
 
     // progress bar spinkit
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    // coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 }

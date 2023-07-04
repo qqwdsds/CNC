@@ -1,4 +1,4 @@
-package com.messenger.cnc.domain
+package com.messenger.cnc.domain.base
 
 import android.view.View
 import android.view.ViewGroup

@@ -2,7 +2,6 @@ package com.messenger.cnc.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -16,6 +15,7 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
+        // check user authentication
         val auth = Firebase.auth
         if(auth.currentUser == null) {
             startActivity(Intent(this, LogRegActivity::class.java))

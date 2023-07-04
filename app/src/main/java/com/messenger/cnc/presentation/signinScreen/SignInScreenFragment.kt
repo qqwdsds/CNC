@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentSignScreenBinding
-import com.messenger.cnc.domain.BaseSignInRegisterFragment
+import com.messenger.cnc.domain.base.BaseSignInRegisterFragment
 import com.messenger.cnc.domain.ErrorState
 import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.SuccessState
@@ -51,7 +51,6 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
                     activity?.finish()
                 }
                 is ErrorState -> {
-                    // TODO
                     changeViewsState(binding.root, ENABLE)
                     Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
                 }
@@ -59,17 +58,10 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
         }
     }
 
+    /**
+     * Function for add listeners to views.
+     */
     private fun setupViews() {
-        binding.passwordEditText.doOnTextChanged { _, _, _, _ ->
-            if (binding.passwordEditTextLayout.error != null)
-                binding.passwordEditTextLayout.error = null
-        }
-
-        binding.emailEditText.doOnTextChanged { _, _, _, _ ->
-            if (binding.emailEditTextLayout.error != null)
-                binding.emailEditTextLayout.error = null
-        }
-
         binding.btnLogin.setOnClickListener {
             val dataValidationResult = checkDataValidation()
             if(dataValidationResult.result) {
@@ -78,7 +70,15 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
             }
         }
 
-    } // end checkLogin
+        binding.passwordEditText.doOnTextChanged { _, _, _, _ ->
+            if (binding.passwordEditTextLayout.error != null)
+                binding.passwordEditTextLayout.error = null
+        }
+        binding.emailEditText.doOnTextChanged { _, _, _, _ ->
+            if (binding.emailEditTextLayout.error != null)
+                binding.emailEditTextLayout.error = null
+        }
+    }
 
     private fun checkDataValidation(): ValidationResult {
         val inputEmail = binding.emailEditText.text.toString()

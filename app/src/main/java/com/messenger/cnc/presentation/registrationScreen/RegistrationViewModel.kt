@@ -12,32 +12,42 @@ import com.messenger.cnc.domain.ErrorState
 import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.State
 import com.messenger.cnc.domain.SuccessState
+import com.messenger.cnc.domain.errors.UsernameIsNotAvailableException
 import com.messenger.cnc.presentation.models.User
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
-class RegistrationViewModel: ViewModel() {
+class RegistrationViewModel : ViewModel() {
     // firebase instances
     private val firebaseAuth = Firebase.auth
     private val firebaseDatabase = Firebase.database(DATABASE_REFERENCE)
 
-    private val _stateLiveData = MutableLiveData<State>()
-    val stateLiveData: LiveData<State> = _stateLiveData
+    private val _registerUserStateLiveData = MutableLiveData<State>()
+    val registerUserStateLiveData: LiveData<State> = _registerUserStateLiveData
 
-    fun registerUser(username: String, email: String, password: String) {
-        // maybe trash
-
+    fun registerUser(
+        username: String,
+        email: String,
+        password: String) {
         viewModelScope.launch {
-            _stateLiveData.postValue(PendingState())
+            _registerUserStateLiveData.postValue(PendingState())
+
+            // username validation
+            val snapshot = firebaseDatabase.getReference("users/usernames").child(username).get()
+            val usernameValidation = snapshot.await()
+            if (usernameValidation.value != null) {
+                _registerUserStateLiveData.postValue(ErrorState(UsernameIsNotAvailableException()))
+                return@launch
+            }
+
             Log.d(
-                "Here",
+                TAG,
                 "Try to register user")
             firebaseAuth.createUserWithEmailAndPassword(
                 email,
-                password)
-                .addOnSuccessListener {
+                password).addOnSuccessListener {
                     Log.d(
-                        "Here",
+                        TAG,
                         "Register user is success")
                     val userUid = it.user?.uid
                     if (userUid != null) {
@@ -47,40 +57,54 @@ class RegistrationViewModel: ViewModel() {
                     }
                 }.addOnFailureListener {
                     Log.d(
-                        "Here",
+                        TAG,
                         "Register user is failure")
-                    _stateLiveData.postValue(ErrorState(it))
+                    _registerUserStateLiveData.postValue(ErrorState(it))
                 }
         }
     }
-    private fun addUserToDataBase(userId: String, username: String) {
+
+    private fun addUserToDataBase(
+        userId: String,
+        username: String) {
         val user = User(
             id = userId,
             name = username,
             description = null,
-            image = null
-        )
+            image = null)
+
+
+        val databaseUserNamesFolder = firebaseDatabase.getReference("users/usernames/$username")
+        databaseUserNamesFolder.setValue(username).addOnSuccessListener {
+            Log.d(
+                TAG,
+                "Username has been added to database")
+            }.addOnFailureListener {
+                Log.d(
+                    TAG,
+                    "Username has`nt added to database")
+            }
 
         Log.d(
-            "Here",
+            TAG,
             "Try to add user to database")
-        val dataBaseFolderReference = firebaseDatabase.getReference("user/$userId")
-        dataBaseFolderReference.setValue(user)
-            .addOnSuccessListener {
+        val databaseUsersFolderRef = firebaseDatabase.getReference("users/$userId")
+        databaseUsersFolderRef.setValue(user).addOnSuccessListener {
                 Log.d(
-                    "Here",
-                    "Add user to database: Success")
-                _stateLiveData.postValue(SuccessState())
-            }
-            .addOnFailureListener {
+                    TAG,
+                    "User has been added to database")
+                _registerUserStateLiveData.postValue(SuccessState())
+            }.addOnFailureListener {
                 Log.d(
-                    "Here",
-                    "Add user to database: Failure")
-                _stateLiveData.postValue(ErrorState(it))
+                    TAG,
+                    "User has`nt added to database")
+                _registerUserStateLiveData.postValue(ErrorState(it))
             }
     }
 
     companion object {
-        private const val DATABASE_REFERENCE = "https://create-new-chat-default-rtdb.europe-west1.firebasedatabase.app/"
+        private const val DATABASE_REFERENCE =
+            "https://create-new-chat-default-rtdb.europe-west1.firebasedatabase.app/"
+        private const val TAG = "RegistrationViewModel"
     }
 }

@@ -12,13 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentRegistrationScreenBinding
-import com.messenger.cnc.domain.BaseSignInRegisterFragment
+import com.messenger.cnc.domain.base.BaseSignInRegisterFragment
 import com.messenger.cnc.domain.ErrorState
 import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.SuccessState
+import com.messenger.cnc.domain.errors.UsernameIsNotAvailableException
 import com.messenger.cnc.presentation.MainActivity
 
-class RegistrationScreenFragment : BaseSignInRegisterFragment() {
+open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     private lateinit var binding: FragmentRegistrationScreenBinding
     override val viewModel by viewModels<RegistrationViewModel>()
 
@@ -39,32 +40,36 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
         setupNavigation()
         setupViews()
 
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {state ->
+        viewModel.registerUserStateLiveData.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is PendingState -> {
-                    Log.d(
-                        "Here",
-                        "State is pending")
-
+                    log("State is pending")
+                    // disable all views
                     changeViewsState(binding.root, DISABLE)
                 }
                 is SuccessState -> {
-                    Log.d(
-                        "Here",
-                        "State is success")
+                    log("State is success")
 
                     // start main messenger activity and close this one
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     activity?.finish()
                 }
                 is ErrorState -> {
-                    // TODO
+                    log("State is error")
+
                     changeViewsState(binding.root, ENABLE)
-                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
+                    when (state.error) {
+                        is UsernameIsNotAvailableException -> {
+                            binding.userNameEditTextLayout.error = state.error.errorMessage
+                        }
+                        else -> {
+                            Toast.makeText(requireContext(), ERROR, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
-        }
-    }
+        } // end observe
+    } // end onViewCreated
 
     private fun setupNavigation() {
         binding.tvIHAALogin.setOnClickListener {
@@ -72,7 +77,10 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
         }
     }
 
-    private fun setupViews() = with(binding) {
+    /**
+     * Function for add listeners to views.
+     */
+    private fun setupViews() : Unit = with(binding) {
         btnRegister.setOnClickListener {
             if (checkDataValidation()) {
                 // register user
@@ -84,19 +92,16 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
             if (userNameEditTextLayout.error != null)
                 userNameEditTextLayout.error = null
         }
-
         emailEditText.doOnTextChanged { _, _, _, _ ->
             if (emailEditTextLayout.error != null)
                 emailEditTextLayout.error = null
         }
-
         passwordEditText.doOnTextChanged { _, _, _, _ ->
             if (passwordEditTextLayout.error != null || passwordRepeatEditTextLayout.error != null) {
                 passwordEditTextLayout.error = null
                 passwordRepeatEditTextLayout.error = null
             }
         }
-
         passwordRepeatEditText.doOnTextChanged { _, _, _, _ ->
             if (passwordEditTextLayout.error != null || passwordRepeatEditTextLayout.error != null) {
                 passwordEditTextLayout.error = null
@@ -118,11 +123,11 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
      * Return true if all data is valid, false when data is not valid.
      */
     private fun checkDataValidation(): Boolean {
-        val isFirstNameValid = checkUserNameIsValid()
+        val isUserNameValid = checkUserNameIsValid()
         val isPasswordValid = checkPasswordAndRepeatPasswordIsValid()
         val isEmailValid = checkEmailIsValid()
 
-        return isFirstNameValid && isPasswordValid && isEmailValid
+        return isUserNameValid && isPasswordValid && isEmailValid
     }
 
     /**
@@ -136,6 +141,8 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
             binding.userNameEditTextLayout.error = getString(R.string.field_empty_error)
             isValid = false
         }
+            // TODO check if username is available
+
         return isValid
     }
 
@@ -158,6 +165,7 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
 
         return isValid
     }
+
     /**
      * Check if password is valid.
      * Return true if password is valid, false when password is not valid.
@@ -198,8 +206,10 @@ class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     }
 
     private fun log(message: String) {
-        Log.d(
-            "RegistrationScreenFragment",
-            message)
+        Log.d(TAG, message)
+    }
+    companion object {
+        private const val TAG = "RegistrationScreenFragment"
+        private const val ERROR = "Error"
     }
 }

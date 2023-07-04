@@ -1,4 +1,4 @@
-package com.messenger.cnc.domain
+package com.messenger.cnc.domain.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
