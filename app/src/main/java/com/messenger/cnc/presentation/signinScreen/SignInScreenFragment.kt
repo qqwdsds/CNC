@@ -81,8 +81,8 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
     }
 
     private fun checkDataValidation(): ValidationResult {
-        val inputEmail = binding.emailEditText.text.toString()
-        val inputPassword = binding.passwordEditText.text.toString()
+        val inputEmail = binding.emailEditText.text.toString().trim()
+        val inputPassword = binding.passwordEditText.text.toString().trim()
         var isValid = true
 
         // email

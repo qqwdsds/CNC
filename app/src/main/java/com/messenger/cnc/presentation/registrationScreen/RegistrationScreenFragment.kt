@@ -101,6 +101,9 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
                 passwordEditTextLayout.error = null
                 passwordRepeatEditTextLayout.error = null
             }
+            if (passwordEditText.text.toString().contains(WHITESPACE)) {
+                passwordEditTextLayout.error = getString(R.string.whitespase_error)
+            }
         }
         passwordRepeatEditText.doOnTextChanged { _, _, _, _ ->
             if (passwordEditTextLayout.error != null || passwordRepeatEditTextLayout.error != null) {
@@ -112,8 +115,8 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
 
     private fun registerUser() {
         val username = binding.userNameEditText.text.toString()
-        val email = binding.emailEditText.text.toString()
-        val password = binding.passwordEditText.text.toString()
+        val email = binding.emailEditText.text.toString().trim()
+        val password = binding.passwordEditText.text.toString().trim()
 
         viewModel.registerUser(username, email, password)
     }
@@ -141,7 +144,10 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
             binding.userNameEditTextLayout.error = getString(R.string.field_empty_error)
             isValid = false
         }
-            // TODO check if username is available
+        else if (username.contains(WHITESPACE)) {
+            binding.userNameEditTextLayout.error = getString(R.string.whitespase_error)
+            isValid = false
+        }
 
         return isValid
     }
@@ -211,5 +217,6 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     companion object {
         private const val TAG = "RegistrationScreenFragment"
         private const val ERROR = "Error"
+        private const val WHITESPACE = " "
     }
 }
