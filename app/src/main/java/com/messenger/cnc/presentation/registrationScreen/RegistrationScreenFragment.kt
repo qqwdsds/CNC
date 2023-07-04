@@ -6,23 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentRegistrationScreenBinding
-import com.messenger.cnc.domain.BaseFragment
+import com.messenger.cnc.domain.BaseSignInRegisterFragment
 import com.messenger.cnc.domain.ErrorState
 import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.SuccessState
-import com.messenger.cnc.presentation.LogRegActivity
 import com.messenger.cnc.presentation.MainActivity
 
-class RegistrationScreenFragment : BaseFragment() {
+class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     private lateinit var binding: FragmentRegistrationScreenBinding
     override val viewModel by viewModels<RegistrationViewModel>()
 
@@ -50,22 +46,12 @@ class RegistrationScreenFragment : BaseFragment() {
                         "Here",
                         "State is pending")
 
-                    // show progressbar and eclipse background
-                    binding.progressbar.visibility = View.VISIBLE
-                    binding.backgroundEclipse.visibility = View.VISIBLE
-
-                    changeViewsState(DISABLE)
+                    changeViewsState(binding.root, DISABLE)
                 }
                 is SuccessState -> {
                     Log.d(
                         "Here",
                         "State is success")
-
-                    // hide progressbar and background eclipse
-                    binding.progressbar.visibility = View.GONE
-                    binding.backgroundEclipse.visibility = View.GONE
-
-                    changeViewsState(ENABLE)
 
                     // start main messenger activity and close this one
                     startActivity(Intent(requireContext(), MainActivity::class.java))
@@ -73,13 +59,8 @@ class RegistrationScreenFragment : BaseFragment() {
                 }
                 is ErrorState -> {
                     // TODO
-
-                    // hide progressbar and background eclipse
-                    binding.progressbar.visibility = View.GONE
-                    binding.backgroundEclipse.visibility = View.GONE
-
-                    changeViewsState(ENABLE)
-                    throw state.error
+                    changeViewsState(binding.root, ENABLE)
+                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -94,9 +75,6 @@ class RegistrationScreenFragment : BaseFragment() {
     private fun setupViews() = with(binding) {
         btnRegister.setOnClickListener {
             if (checkDataValidation()) {
-                // disable views
-                changeViewsState(DISABLE)
-
                 // register user
                 registerUser()
             }
@@ -133,27 +111,6 @@ class RegistrationScreenFragment : BaseFragment() {
         val password = binding.passwordEditText.text.toString()
 
         viewModel.registerUser(username, email, password)
-    }
-
-    /**
-     * Disable all view on screen.
-     * state:
-     * [RegistrationScreenFragment.DISABLE] - disable all views;
-     * [RegistrationScreenFragment.ENABLE] - enable all view
-     */
-    private fun changeViewsState(state: Int) {
-        when (state) {
-            DISABLE -> {
-                binding.root.children.forEach {
-                    it.isEnabled = false
-                }
-            }
-            ENABLE -> {
-                binding.root.children.forEach {
-                    it.isEnabled = true
-                }
-            }
-        }
     }
 
     /**
@@ -242,14 +199,7 @@ class RegistrationScreenFragment : BaseFragment() {
 
     private fun log(message: String) {
         Log.d(
-            TAG,
+            "RegistrationScreenFragment",
             message)
-    }
-    companion object {
-        // to disable/enable views
-        private const val DISABLE = 0
-        private const val ENABLE = 1
-
-        private const val TAG = "RegistrationScreenFragment"
     }
 }

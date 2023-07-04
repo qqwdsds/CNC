@@ -26,6 +26,7 @@ class RegistrationViewModel: ViewModel() {
 
     fun registerUser(username: String, email: String, password: String) {
         // maybe trash
+
         viewModelScope.launch {
             _stateLiveData.postValue(PendingState())
             Log.d(
@@ -33,7 +34,8 @@ class RegistrationViewModel: ViewModel() {
                 "Try to register user")
             firebaseAuth.createUserWithEmailAndPassword(
                 email,
-                password).addOnSuccessListener {
+                password)
+                .addOnSuccessListener {
                     Log.d(
                         "Here",
                         "Register user is success")

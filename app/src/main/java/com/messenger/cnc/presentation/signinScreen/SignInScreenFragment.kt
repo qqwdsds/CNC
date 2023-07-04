@@ -1,25 +1,27 @@
 package com.messenger.cnc.presentation.signinScreen
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentSignScreenBinding
-import com.messenger.cnc.domain.BaseFragment
+import com.messenger.cnc.domain.BaseSignInRegisterFragment
+import com.messenger.cnc.domain.ErrorState
+import com.messenger.cnc.domain.PendingState
+import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.presentation.MainActivity
+import com.messenger.cnc.presentation.signinScreen.models.LoginData
+import com.messenger.cnc.presentation.signinScreen.models.ValidationResult
 
-class SignInScreenFragment : BaseFragment() {
+class SignInScreenFragment : BaseSignInRegisterFragment() {
     private lateinit var binding: FragmentSignScreenBinding
-    override val viewModel: ViewModel
-        get() = TODO("Not yet implemented")
+    override val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +31,6 @@ class SignInScreenFragment : BaseFragment() {
         return binding.root
     } // end onCreateView
 
-    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?) {
@@ -38,6 +39,24 @@ class SignInScreenFragment : BaseFragment() {
             savedInstanceState)
         setupNavigation()
         setupViews()
+
+        viewModel.stateLiveData.observe(viewLifecycleOwner) {state ->
+            when (state) {
+                is PendingState -> {
+                    changeViewsState(binding.root, DISABLE)
+                }
+                is SuccessState -> {
+                    // start main messenger activity and close this one
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    activity?.finish()
+                }
+                is ErrorState -> {
+                    // TODO
+                    changeViewsState(binding.root, ENABLE)
+                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupViews() {
@@ -52,18 +71,16 @@ class SignInScreenFragment : BaseFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            if(checkDataValidation()) {
-                startActivity(
-                    Intent(
-                        requireContext(),
-                        MainActivity::class.java))
-                activity?.finish()
+            val dataValidationResult = checkDataValidation()
+            if(dataValidationResult.result) {
+                //login user
+                viewModel.signInUser(dataValidationResult.data!!)
             }
         }
 
     } // end checkLogin
 
-    private fun checkDataValidation(): Boolean {
+    private fun checkDataValidation(): ValidationResult {
         val inputEmail = binding.emailEditText.text.toString()
         val inputPassword = binding.passwordEditText.text.toString()
         var isValid = true
@@ -88,7 +105,11 @@ class SignInScreenFragment : BaseFragment() {
             isValid = false
         }
 
-        return isValid
+        return if (isValid) {
+            ValidationResult(isValid, LoginData(inputEmail, inputPassword))
+        } else {
+            ValidationResult(isValid)
+        }
     }
 
     private fun setupNavigation() {
