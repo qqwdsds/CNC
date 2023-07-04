@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#828282</color>
+    <color name="transparent_gray">#20828282</color>
     <color name="chat_item_color">#E6E6E6</color>
     <color name="perwinkle">#B7C0EE</color>
     <color name="teagrean">#CBF3D2</color>

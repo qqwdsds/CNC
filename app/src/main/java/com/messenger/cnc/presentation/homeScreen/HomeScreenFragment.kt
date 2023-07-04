@@ -24,7 +24,10 @@ class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupNavigation()
+    }// end onViewCreated
 
+    private fun setupNavigation() {
         binding.imgBtnChatAll.setOnClickListener{
             Log.d(TAG, "try to open chats fragment")
             findNavController().navigate(R.id.action_homeScreenFragment_to_chatsFragment, )
@@ -38,9 +41,10 @@ class HomeScreenFragment: Fragment(R.layout.fragment_home_screen) {
             findNavController().navigate(R.id.action_homeScreenFragment_to_friendsScreenFragment)
         }
         binding.imgBtnOff.setOnClickListener{
+            // TODO sign out
             val logregScreen = Intent(requireContext(), LogRegActivity::class.java)
             startActivity(logregScreen)
             activity?.finish()
         }
-    }// end onViewCreated
+    }
 }

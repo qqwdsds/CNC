@@ -49,19 +49,35 @@ class RegistrationScreenFragment : BaseFragment() {
                     Log.d(
                         "Here",
                         "State is pending")
-                    // TODO show progress bar
+
+                    // show progressbar and eclipse background
+                    binding.progressbar.visibility = View.VISIBLE
+                    binding.backgroundEclipse.visibility = View.VISIBLE
+
                     changeViewsState(DISABLE)
                 }
                 is SuccessState -> {
                     Log.d(
                         "Here",
                         "State is success")
+
+                    // hide progressbar and background eclipse
+                    binding.progressbar.visibility = View.GONE
+                    binding.backgroundEclipse.visibility = View.GONE
+
+                    changeViewsState(ENABLE)
+
                     // start main messenger activity and close this one
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     activity?.finish()
                 }
                 is ErrorState -> {
                     // TODO
+
+                    // hide progressbar and background eclipse
+                    binding.progressbar.visibility = View.GONE
+                    binding.backgroundEclipse.visibility = View.GONE
+
                     changeViewsState(ENABLE)
                     throw state.error
                 }
