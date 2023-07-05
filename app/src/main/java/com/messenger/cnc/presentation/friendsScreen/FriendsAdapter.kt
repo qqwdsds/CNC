@@ -1,6 +1,5 @@
 package com.messenger.cnc.presentation.friendsScreen
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -55,7 +54,6 @@ class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDif
                 POPUPMENU_CHAT -> Toast.makeText(context, "Chat", Toast.LENGTH_SHORT).show()
                 POPUPMENU_SHOW_INFO -> Toast.makeText(context, "Info", Toast.LENGTH_SHORT).show()
                 POPUPMENU_DELETE -> Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show()
-
             }
             return@setOnMenuItemClickListener true
         }

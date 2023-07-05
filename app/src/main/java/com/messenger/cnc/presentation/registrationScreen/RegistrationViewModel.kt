@@ -35,6 +35,9 @@ class RegistrationViewModel : ViewModel() {
             // username validation
             val snapshot = firebaseDatabase.getReference("users/usernames").child(username).get()
             val usernameValidation = snapshot.await()
+            Log.d(
+                TAG,
+                "Username validation username value: ${usernameValidation.value}")
             if (usernameValidation.value != null) {
                 _registerUserStateLiveData.postValue(ErrorState(UsernameIsNotAvailableException()))
                 return@launch
@@ -67,15 +70,15 @@ class RegistrationViewModel : ViewModel() {
     private fun addUserToDataBase(
         userId: String,
         username: String) {
+        // HACK for firebase
         val user = User(
             id = userId,
             name = username,
-            description = null,
-            image = null)
-
+            description = "",
+            image = "")
 
         val databaseUserNamesFolder = firebaseDatabase.getReference("users/usernames/$username")
-        databaseUserNamesFolder.setValue(username).addOnSuccessListener {
+        databaseUserNamesFolder.setValue(userId).addOnSuccessListener {
             Log.d(
                 TAG,
                 "Username has been added to database")

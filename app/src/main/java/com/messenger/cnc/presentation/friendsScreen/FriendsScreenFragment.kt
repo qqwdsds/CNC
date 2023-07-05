@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,14 +43,15 @@ class FriendsScreenFragment :Fragment(R.layout.fragment_friends_screen) {
 
     }// end onViewCreated
 
-    private fun setupFriendsList(){
+    private fun setupFriendsList() {
         binding.rvFriends.adapter = adapter
         binding.rvFriends.layoutManager = LinearLayoutManager(requireContext())
 
+        // TODO mock
         adapter.setList(mutableListOf(
-            User("", "Vladik", "Chokoladik", null),
-            User("", "Igor", "Yosip", null),
-            User("", "Me", "Rija mavpa", null)))
+            User("", "Vladik", "Chokoladik", ""),
+            User("", "Igor", "Yosip", ""),
+            User("", "Me", "Rija mavpa", "")))
     }// end setupFriendsList
 
     private fun setupNavigation() {

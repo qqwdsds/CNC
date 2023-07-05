@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/findFrienndsScreenFragment"
-        android:name="com.messenger.cnc.presentation.friendsScreen.findfriendsscreen.FindFrienndsScreenFragment"
+        android:name="com.messenger.cnc.presentation.friendsScreen.findfriendsscreen.FindFriendsScreenFragment"
         android:label="fragment_find_friends_screen"
         tools:layout="@layout/fragment_find_friends_screen" />
 </navigation>

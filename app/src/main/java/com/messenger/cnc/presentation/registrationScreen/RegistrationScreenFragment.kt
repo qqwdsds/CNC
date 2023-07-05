@@ -60,7 +60,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
                     changeViewsState(binding.root, ENABLE)
                     when (state.error) {
                         is UsernameIsNotAvailableException -> {
-                            binding.userNameEditTextLayout.error = state.error.errorMessage
+                            binding.userNameEditTextLayout.error = state.error.message
                         }
                         else -> {
                             Toast.makeText(requireContext(), ERROR, Toast.LENGTH_SHORT).show()
@@ -186,7 +186,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
             passwordEditTextLayout.error = getString(R.string.field_empty_error)
             isValid = false
         }
-        else if (password.length < 9) {
+        else if (password.length < 8) {
             passwordEditTextLayout.error = getString(R.string.small_password_error)
             isValid = false
         }
@@ -196,7 +196,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
             passwordRepeatEditTextLayout.error = getString(R.string.field_empty_error)
             isValid = false
         }
-        else if (repeatedPassword.length < 9) {
+        else if (repeatedPassword.length < 8) {
             passwordRepeatEditTextLayout.error = getString(R.string.small_password_error)
             isValid = false
         }
