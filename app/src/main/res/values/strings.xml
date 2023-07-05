@@ -39,4 +39,6 @@
     <string name="facebook">Facebook</string>
     <string name="or_login_with">Or login with</string>
     <string name="whitespase_error">Must not contain whitespace</string>
+    <string name="friends_search_hint">Type username here</string>
+    <string name="find_user">Find user</string>
 </resources>

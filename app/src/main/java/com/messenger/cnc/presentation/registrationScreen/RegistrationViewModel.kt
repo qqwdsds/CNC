@@ -13,7 +13,7 @@ import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.State
 import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.errors.UsernameIsNotAvailableException
-import com.messenger.cnc.presentation.models.User
+import com.messenger.cnc.data.models.User
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 

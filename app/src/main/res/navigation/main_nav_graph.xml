@@ -42,5 +42,17 @@
         android:id="@+id/friendsScreenFragment"
         android:name="com.messenger.cnc.presentation.friendsScreen.FriendsScreenFragment"
         android:label="fragment_friends_screen"
-        tools:layout="@layout/fragment_friends_screen" />
+        tools:layout="@layout/fragment_friends_screen" >
+        <action
+            android:id="@+id/action_friendsScreenFragment_to_findFrienndsScreenFragment"
+            app:destination="@id/findFrienndsScreenFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/findFrienndsScreenFragment"
+        android:name="com.messenger.cnc.presentation.friendsScreen.findfriendsscreen.FindFrienndsScreenFragment"
+        android:label="fragment_find_friends_screen"
+        tools:layout="@layout/fragment_find_friends_screen" />
 </navigation>

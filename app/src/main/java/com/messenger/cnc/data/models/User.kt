@@ -1,4 +1,4 @@
-package com.messenger.cnc.presentation.models
+package com.messenger.cnc.data.models
 
 data class User(
     val id: String,

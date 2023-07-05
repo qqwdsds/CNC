@@ -1,19 +1,28 @@
 package com.messenger.cnc.presentation.friendsScreen
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FriendsItemBinding
-import com.messenger.cnc.presentation.models.User
+import com.messenger.cnc.data.models.User
 
 class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDiffCallback()), View.OnClickListener {
-    class FriendsHolder(val binding: FriendsItemBinding):RecyclerView.ViewHolder(binding.root)
+    private var defaultUserList = emptyList<User>()
+    private var filter: ValueFilter? = null
+
+    fun setList(list: List<User>) {
+        defaultUserList = list
+
+        this.submitList(list)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -54,9 +63,46 @@ class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDif
         popupMenu.show()
     }// end showPopup
 
+    fun getFilter(): ValueFilter {
+        if (filter == null) {
+            filter = ValueFilter()
+        }
+        return filter!!
+    }
+
     companion object {
         private const val POPUPMENU_CHAT = 0
         private const val POPUPMENU_DELETE = 1
         private const val POPUPMENU_SHOW_INFO = 2
     }// end companion object
+
+
+    class FriendsHolder(val binding: FriendsItemBinding):RecyclerView.ViewHolder(binding.root)
+    inner class ValueFilter: Filter() {
+        override fun performFiltering(text: CharSequence?): FilterResults {
+            val filterResults = FilterResults()
+            if (!text.isNullOrEmpty()) {
+                val filterList = ArrayList<User>()
+                for (item in defaultUserList) {
+                    if (item.name.lowercase().contains(text.toString().lowercase())) {
+                        filterList.add(item)
+                    }
+                }
+                filterResults.count = filterList.size
+                filterResults.values = filterList
+            } else {
+                filterResults.count = defaultUserList.size
+                filterResults.values = defaultUserList
+            }
+            return filterResults
+        }
+
+        override fun publishResults(
+            p0: CharSequence?,
+            filterResult: FilterResults) {
+            this@FriendsAdapter.submitList(filterResult.values as List<User>)
+            notifyDataSetChanged()
+        }
+
+    }
 }

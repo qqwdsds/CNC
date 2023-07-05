@@ -6,43 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context=".presentation.friendsScreen.FriendsScreenFragment">
+    tools:context=".presentation.friendsScreen.findfriendsscreen.FindFrienndsScreenFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp">
-
-        <LinearLayout
-            android:id="@+id/add_friend_button"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:background="@drawable/ripple_effect"
-            app:layout_constraintBottom_toBottomOf="@+id/close_window_button"
-            app:layout_constraintEnd_toStartOf="@+id/close_window_button"
-            app:layout_constraintTop_toTopOf="@+id/close_window_button" >
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:backgroundTint="@android:color/transparent"
-                android:src="@android:drawable/ic_input_add" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Add friend"
-                android:textSize="22sp"
-                android:fontFamily="@font/font_nunito_semi_bold"
-                android:layout_gravity="end" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/friends_text"
@@ -51,7 +20,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/font_nunito_semi_bold"
-            android:text="Friends"
+            android:text="@string/find_user"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="friends_text, add_friend_button, close_window_button" />
+            app:constraint_referenced_ids="friends_text, close_window_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
