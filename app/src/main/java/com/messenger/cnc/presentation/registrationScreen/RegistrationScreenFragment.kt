@@ -63,7 +63,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
                             binding.userNameEditTextLayout.error = state.error.message
                         }
                         else -> {
-                            Toast.makeText(requireContext(), ERROR, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -114,7 +114,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     }
 
     private fun registerUser() {
-        val username = binding.userNameEditText.text.toString()
+        val username = binding.userNameEditText.text.toString().trim()
         val email = binding.emailEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
 
@@ -138,7 +138,7 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
      * Return true if username is valid, false when username is not valid.
      */
     private fun checkUserNameIsValid(): Boolean {
-        val username = binding.userNameEditText.text.toString()
+        val username = binding.userNameEditText.text.toString().trim()
         var isValid = true
         if(username.isBlank()) {
             binding.userNameEditTextLayout.error = getString(R.string.field_empty_error)
@@ -216,7 +216,6 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
     }
     companion object {
         private const val TAG = "RegistrationScreenFragment"
-        private const val ERROR = "Error"
         private const val WHITESPACE = " "
     }
 }

@@ -41,4 +41,5 @@
     <string name="whitespase_error">Must not contain whitespace</string>
     <string name="friends_search_hint">Type username here</string>
     <string name="find_user">Find user</string>
+    <string name="add_to_friends">Add to friends</string>
 </resources>

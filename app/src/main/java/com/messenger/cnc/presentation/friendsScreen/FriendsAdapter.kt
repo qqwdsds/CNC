@@ -1,5 +1,6 @@
 package com.messenger.cnc.presentation.friendsScreen
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -14,13 +15,24 @@ import com.messenger.cnc.databinding.FriendsItemBinding
 import com.messenger.cnc.data.models.User
 
 class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDiffCallback()), View.OnClickListener {
-    private var defaultUserList = emptyList<User>()
+    private var defaultUserList = ArrayList<User>()
     private var filter: ValueFilter? = null
 
-    fun setList(list: List<User>) {
-        defaultUserList = list
+    fun setUser(user: User) {
+        Log.d("User", "User: $user")
+            val userIndex = defaultUserList.indexOf(user)
+            if (userIndex == -1) {
+                defaultUserList.add(user)
+                this.submitList(defaultUserList)
+            }
+    }
 
-        this.submitList(list)
+    fun removeUser(user: User) {
+        val userIndex = defaultUserList.indexOf(user)
+        if (userIndex != -1) {
+            defaultUserList.removeAt(userIndex)
+            this.submitList(defaultUserList)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsHolder {
