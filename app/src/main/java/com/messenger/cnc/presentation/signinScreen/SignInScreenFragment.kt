@@ -100,7 +100,7 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
             binding.passwordEditTextLayout.error = getString(R.string.field_empty_error)
             isValid = false
         }
-        else if (inputPassword.length < 9) {
+        else if (inputPassword.length < 8) {
             binding.passwordEditTextLayout.error = getString(R.string.small_password_error)
             isValid = false
         }

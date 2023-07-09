@@ -18,7 +18,7 @@ class FriendsAdapter: ListAdapter<User, FriendsAdapter.FriendsHolder>(FriendsDif
     private var defaultUserList = ArrayList<User>()
     private var filter: ValueFilter? = null
 
-    fun setUser(user: User) {
+    fun addUser(user: User) {
         Log.d("User", "User: $user")
             val userIndex = defaultUserList.indexOf(user)
             if (userIndex == -1) {

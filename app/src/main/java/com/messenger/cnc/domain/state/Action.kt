@@ -1,5 +1,5 @@
 package com.messenger.cnc.domain.state
 
-enum class StateDataTypes {
+enum class Action {
     ADD_FRIENDS
 }

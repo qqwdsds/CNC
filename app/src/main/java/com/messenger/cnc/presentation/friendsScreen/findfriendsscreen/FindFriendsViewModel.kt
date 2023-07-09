@@ -15,8 +15,7 @@ import com.messenger.cnc.domain.State
 import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.errors.AddFriendsExeption
 import com.messenger.cnc.domain.errors.UserNotFoundException
-import com.messenger.cnc.domain.state.StateDataTypes
-import kotlinx.coroutines.delay
+import com.messenger.cnc.domain.state.Action
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
@@ -65,7 +64,7 @@ class FindFriendsViewModel: ViewModel() {
     // trash implementation, don`t do like that
     fun addFriend(userId: String) {
         viewModelScope.launch {
-            _stateLiveData.postValue(PendingState(StateDataTypes.ADD_FRIENDS))
+            _stateLiveData.postValue(PendingState(Action.ADD_FRIENDS))
             val usersFolder = firebaseDatabase.getReference(DATABASE_USERS_FOLDER_PATH)
             val messagesFolder = firebaseDatabase.getReference(String.format(DATABASE_FRIENDS_FOLDER_PATH, firebaseAuth.uid, userId))
             val userSnapshot = usersFolder.child(userId).get().await()
@@ -74,11 +73,11 @@ class FindFriendsViewModel: ViewModel() {
             // mock
             if (user == null) {
                 Log.d(TAG, "User is null")
-                _stateLiveData.postValue(SuccessState(StateDataTypes.ADD_FRIENDS))
+                _stateLiveData.postValue(SuccessState(Action.ADD_FRIENDS))
             }
             messagesFolder.setValue(user)
                 .addOnSuccessListener {
-                    _stateLiveData.postValue(SuccessState(StateDataTypes.ADD_FRIENDS))
+                    _stateLiveData.postValue(SuccessState(Action.ADD_FRIENDS))
                 }
                 .addOnFailureListener {
                     _stateLiveData.postValue(ErrorState(AddFriendsExeption()))

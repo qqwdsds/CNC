@@ -19,7 +19,7 @@ import com.messenger.cnc.domain.ErrorState
 import com.messenger.cnc.domain.PendingState
 import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.base.BaseFragment
-import com.messenger.cnc.domain.state.StateDataTypes
+import com.messenger.cnc.domain.state.Action
 
 class FindFriendsScreenFragment: BaseFragment() {
     override val viewModel by viewModels<FindFriendsViewModel>()
@@ -64,7 +64,7 @@ class FindFriendsScreenFragment: BaseFragment() {
             when(state) {
                 is PendingState -> {
 
-                    if (state.data == StateDataTypes.ADD_FRIENDS) {
+                    if (state.data == Action.ADD_FRIENDS) {
                         binding.cardProgressbar.visibility = View.VISIBLE
                         return@observe
                     }
@@ -77,7 +77,7 @@ class FindFriendsScreenFragment: BaseFragment() {
                     // hide progressbar
                     binding.progressbar.visibility = View.GONE
 
-                    if (state.data == StateDataTypes.ADD_FRIENDS) {
+                    if (state.action == Action.ADD_FRIENDS) {
                         binding.cardProgressbar.visibility = View.GONE
                         Log.d(
                             "Here",
