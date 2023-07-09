@@ -13,10 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentRegistrationScreenBinding
 import com.messenger.cnc.domain.base.BaseSignInRegisterFragment
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.errors.UsernameIsNotAvailableException
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.SuccessResult
 import com.messenger.cnc.presentation.MainActivity
 
 open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
@@ -40,35 +40,35 @@ open class RegistrationScreenFragment : BaseSignInRegisterFragment() {
         setupNavigation()
         setupViews()
 
-        viewModel.registerUserStateLiveData.observe(viewLifecycleOwner) { state ->
-            when(state) {
-                is PendingState -> {
+        viewModel.resultLiveData.observe(viewLifecycleOwner) {result ->
+            when(result) {
+                is PendingResult -> {
                     log("State is pending")
                     // disable all views
                     changeViewsState(binding.root, DISABLE)
                 }
-                is SuccessState -> {
+                is SuccessResult -> {
                     log("State is success")
 
                     // start main messenger activity and close this one
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     activity?.finish()
                 }
-                is ErrorState -> {
+                is ErrorResult -> {
                     log("State is error")
 
                     changeViewsState(binding.root, ENABLE)
-                    when (state.error) {
+                    when (result.error) {
                         is UsernameIsNotAvailableException -> {
-                            binding.userNameEditTextLayout.error = state.error.message
+                            binding.userNameEditTextLayout.error = result.error.message
                         }
                         else -> {
-                            Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }
-        } // end observe
+        }
     } // end onViewCreated
 
     private fun setupNavigation() {

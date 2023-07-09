@@ -15,11 +15,10 @@ import com.bumptech.glide.Glide
 import com.messenger.cnc.R
 import com.messenger.cnc.data.models.User
 import com.messenger.cnc.databinding.FragmentFindFriendsScreenBinding
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.base.BaseFragment
-import com.messenger.cnc.domain.state.Action
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.SuccessResult
 
 class FindFriendsScreenFragment: BaseFragment() {
     override val viewModel by viewModels<FindFriendsViewModel>()
@@ -42,49 +41,41 @@ class FindFriendsScreenFragment: BaseFragment() {
             savedInstanceState)
         setupNavigation()
 
-        viewModel.searchLiveData.observe(viewLifecycleOwner) { user ->
-            // TODO auth.currentUser == user.id
-            // setup user data card
-            binding.progressbar.visibility = View.GONE
-            binding.userDataCard.visibility = View.VISIBLE
-            Glide.with(requireContext())
-                .load(user.image)
-                .placeholder(R.drawable.ic_user_placeholder)
-                .error(R.drawable.ic_user_placeholder)
-                .into(binding.userImage)
-            binding.userUsername.text = user.name
-            binding.userDescription.text = user.description
-            binding.moreButton.setOnClickListener {
-                it.tag = user
-                showPopup(it)
-            }
-        }
-
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {state ->
-            when(state) {
-                is PendingState -> {
-
-                    if (state.data == Action.ADD_FRIENDS) {
-                        binding.cardProgressbar.visibility = View.VISIBLE
-                        return@observe
-                    }
-
-                    // show progressbar and user data card
+        viewModel.searchUserLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PendingResult -> {
+                    // show progressbar and hide user data card
                     binding.progressbar.visibility = View.VISIBLE
                     binding.userDataCard.visibility = View.GONE
                 }
-                is SuccessState -> {
+                is SuccessResult -> {
                     // hide progressbar
                     binding.progressbar.visibility = View.GONE
+                    val user = result.data
 
-                    if (state.action == Action.ADD_FRIENDS) {
-                        binding.cardProgressbar.visibility = View.GONE
-                        Log.d(
-                            "Here",
-                            "SuccessState: StateDataTypes.ADD_FRIENDS")
+                    if (user == null) {
+                        Log.d(TAG, "User is null")
+                        return@observe
                     }
+
+                    // TODO auth.currentUser == user.id
+                    // setup user data card
+                    binding.progressbar.visibility = View.GONE
+                    binding.userDataCard.visibility = View.VISIBLE
+                    Glide.with(requireContext())
+                        .load(user.image)
+                        .placeholder(R.drawable.ic_user_placeholder)
+                        .error(R.drawable.ic_user_placeholder)
+                        .into(binding.userImage)
+                    binding.userUsername.text = user.name
+                    binding.userDescription.text = user.description
+                    binding.moreButton.setOnClickListener {
+                        it.tag = user
+                        showPopup(it)
+                    }
+
                 }
-                is ErrorState -> {
+                is ErrorResult -> {
                     // TODO
                     // hide progressbar and user data card and show error toast
                     binding.userDataCard.visibility = View.GONE
@@ -92,8 +83,23 @@ class FindFriendsScreenFragment: BaseFragment() {
                     binding.cardProgressbar.visibility = View.GONE
                     Toast.makeText(
                         requireContext(),
-                        state.error.message,
+                        result.error.message,
                         Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewModel.addFriendLiveData.observe(viewLifecycleOwner) {result ->
+            when(result) {
+                is PendingResult -> {
+                    binding.cardProgressbar.visibility = View.VISIBLE
+                }
+                is SuccessResult -> {
+                    binding.cardProgressbar.visibility = View.GONE
+                }
+                is ErrorResult -> {
+                    binding.cardProgressbar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -149,5 +155,6 @@ class FindFriendsScreenFragment: BaseFragment() {
     companion object {
         private const val POPUPMENU_CHAT = 0
         private const val ADD_TO_FRIENDS = 1
+        private const val TAG = "FindFriendsScreenFragment"
     }
 }

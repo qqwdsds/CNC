@@ -1,6 +1,5 @@
 package com.messenger.cnc.presentation.friendsScreen.findfriendsscreen
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,13 +8,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.messenger.cnc.data.models.User
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.State
-import com.messenger.cnc.domain.SuccessState
-import com.messenger.cnc.domain.errors.AddFriendsExeption
 import com.messenger.cnc.domain.errors.UserNotFoundException
-import com.messenger.cnc.domain.state.Action
+import com.messenger.cnc.domain.state.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
@@ -25,16 +19,16 @@ class FindFriendsViewModel: ViewModel() {
     private val firebaseAuth = Firebase.auth
     private val firebaseDatabase = Firebase.database(DATABASE_REFERENCE)
 
-    private val _searchLiveData = MutableLiveData<User>()
-    val searchLiveData: LiveData<User> = _searchLiveData
+    private val _searchUserLiveData = MutableLiveData<Result<User>>()
+    val searchUserLiveData: LiveData<Result<User>> = _searchUserLiveData
 
-    private val _stateLiveData = MutableLiveData<State>()
-    val stateLiveData: LiveData<State> = _stateLiveData
+    private val _addFriendLiveData = MutableLiveData<Result<Nothing>>()
+    val addFriendLiveData: LiveData<Result<Nothing>> = _addFriendLiveData
 
     fun searchUser(username: String) {
-        if (_stateLiveData.value !is PendingState) {
+        if (_searchUserLiveData.value !is PendingResult) {
             viewModelScope.launch {
-                _stateLiveData.postValue(PendingState())
+                _searchUserLiveData.postValue(PendingResult())
 
                 // get userId from database
                 // if user doesn't exist DataSnapshot.value will be null
@@ -47,14 +41,13 @@ class FindFriendsViewModel: ViewModel() {
                             .addOnSuccessListener {user ->
                                 try {
                                     val userInstance = user.getValue(User::class.java)
-                                    _searchLiveData.postValue(userInstance!!)
-                                    _stateLiveData.postValue(SuccessState())
+                                    _searchUserLiveData.postValue(SuccessResult(userInstance))
                                 } catch (e: Exception) {
-                                    _stateLiveData.postValue(ErrorState(UserNotFoundException()))
+                                    _searchUserLiveData.postValue(ErrorResult(UserNotFoundException()))
                                 }
                             }
                     } else {
-                        _stateLiveData.postValue(ErrorState(Exception("User not found")))
+                        _searchUserLiveData.postValue(ErrorResult(UserNotFoundException()))
                     }
                 }
             }
@@ -64,23 +57,22 @@ class FindFriendsViewModel: ViewModel() {
     // trash implementation, don`t do like that
     fun addFriend(userId: String) {
         viewModelScope.launch {
-            _stateLiveData.postValue(PendingState(Action.ADD_FRIENDS))
+            _addFriendLiveData.postValue(PendingResult())
+            // get references to database folders
             val usersFolder = firebaseDatabase.getReference(DATABASE_USERS_FOLDER_PATH)
-            val messagesFolder = firebaseDatabase.getReference(String.format(DATABASE_FRIENDS_FOLDER_PATH, firebaseAuth.uid, userId))
+            val usersFriendsFolder = firebaseDatabase.getReference(String.format(DATABASE_FRIENDS_FOLDER_PATH, firebaseAuth.uid, userId))
+
+            // get user from database
             val userSnapshot = usersFolder.child(userId).get().await()
             val user = userSnapshot.getValue(User::class.java)
 
-            // mock
-            if (user == null) {
-                Log.d(TAG, "User is null")
-                _stateLiveData.postValue(SuccessState(Action.ADD_FRIENDS))
-            }
-            messagesFolder.setValue(user)
+            // set user to users friends folder
+            usersFriendsFolder.setValue(user)
                 .addOnSuccessListener {
-                    _stateLiveData.postValue(SuccessState(Action.ADD_FRIENDS))
+                    _addFriendLiveData.postValue(SuccessResult())
                 }
                 .addOnFailureListener {
-                    _stateLiveData.postValue(ErrorState(AddFriendsExeption()))
+                    _addFriendLiveData.postValue(ErrorResult(it))
                 }
         }
     }

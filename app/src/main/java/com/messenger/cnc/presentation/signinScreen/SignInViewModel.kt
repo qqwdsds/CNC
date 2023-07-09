@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.State
-import com.messenger.cnc.domain.SuccessState
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.Result
+import com.messenger.cnc.domain.state.SuccessResult
 import com.messenger.cnc.presentation.signinScreen.models.LoginData
 import kotlinx.coroutines.launch
 
@@ -17,19 +17,19 @@ class SignInViewModel: ViewModel() {
     // firebase instances
     private val firebaseAuth = Firebase.auth
 
-    private val _stateLiveData = MutableLiveData<State>()
-    val stateLiveData: LiveData<State> = _stateLiveData
+    private val _resultLiveData = MutableLiveData<Result<Nothing>>()
+    val resultLiveData: LiveData<Result<Nothing>> = _resultLiveData
 
     fun signInUser(userLoginData: LoginData) {
         viewModelScope.launch {
-            _stateLiveData.postValue(PendingState())
+            _resultLiveData.postValue(PendingResult())
 
             firebaseAuth.signInWithEmailAndPassword(userLoginData.email, userLoginData.password)
                 .addOnSuccessListener {
-                    _stateLiveData.postValue(SuccessState())
+                    _resultLiveData.postValue(SuccessResult())
                 }
                 .addOnFailureListener{
-                    _stateLiveData.postValue(ErrorState(it))
+                    _resultLiveData.postValue(ErrorResult(it))
                 }
         }
     }

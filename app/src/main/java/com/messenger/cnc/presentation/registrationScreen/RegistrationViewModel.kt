@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.State
-import com.messenger.cnc.domain.SuccessState
 import com.messenger.cnc.domain.errors.UsernameIsNotAvailableException
 import com.messenger.cnc.data.models.User
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.Result
+import com.messenger.cnc.domain.state.SuccessResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -22,15 +22,15 @@ class RegistrationViewModel : ViewModel() {
     private val firebaseAuth = Firebase.auth
     private val firebaseDatabase = Firebase.database(DATABASE_REFERENCE)
 
-    private val _registerUserStateLiveData = MutableLiveData<State>()
-    val registerUserStateLiveData: LiveData<State> = _registerUserStateLiveData
+    private val _resultLiveData = MutableLiveData<Result<Nothing>>()
+    val resultLiveData: LiveData<Result<Nothing>> = _resultLiveData
 
     fun registerUser(
         username: String,
         email: String,
         password: String) {
         viewModelScope.launch {
-            _registerUserStateLiveData.postValue(PendingState())
+            _resultLiveData.postValue(PendingResult())
 
             // username validation
             val snapshot = firebaseDatabase.getReference("users/usernames").child(username).get()
@@ -39,7 +39,7 @@ class RegistrationViewModel : ViewModel() {
                 TAG,
                 "Username validation username value: ${usernameValidation.value}")
             if (usernameValidation.value != null) {
-                _registerUserStateLiveData.postValue(ErrorState(UsernameIsNotAvailableException()))
+                _resultLiveData.postValue(ErrorResult(UsernameIsNotAvailableException()))
                 return@launch
             }
 
@@ -62,7 +62,7 @@ class RegistrationViewModel : ViewModel() {
                     Log.d(
                         TAG,
                         "Register user is failure")
-                    _registerUserStateLiveData.postValue(ErrorState(it))
+                    _resultLiveData.postValue(ErrorResult(it))
                 }
         }
     }
@@ -96,12 +96,12 @@ class RegistrationViewModel : ViewModel() {
                 Log.d(
                     TAG,
                     "User has been added to database")
-                _registerUserStateLiveData.postValue(SuccessState())
+                _resultLiveData.postValue(SuccessResult())
             }.addOnFailureListener {
                 Log.d(
                     TAG,
                     "User has`nt added to database")
-                _registerUserStateLiveData.postValue(ErrorState(it))
+                _resultLiveData.postValue(ErrorResult(it))
             }
     }
 

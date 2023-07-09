@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentSignScreenBinding
 import com.messenger.cnc.domain.base.BaseSignInRegisterFragment
-import com.messenger.cnc.domain.ErrorState
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.SuccessState
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.SuccessResult
 import com.messenger.cnc.presentation.MainActivity
 import com.messenger.cnc.presentation.signinScreen.models.LoginData
 import com.messenger.cnc.presentation.signinScreen.models.ValidationResult
@@ -40,19 +40,19 @@ class SignInScreenFragment : BaseSignInRegisterFragment() {
         setupNavigation()
         setupViews()
 
-        viewModel.stateLiveData.observe(viewLifecycleOwner) {state ->
-            when (state) {
-                is PendingState -> {
+        viewModel.resultLiveData.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PendingResult -> {
                     changeViewsState(binding.root, DISABLE)
                 }
-                is SuccessState -> {
+                is SuccessResult -> {
                     // start main messenger activity and close this one
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     activity?.finish()
                 }
-                is ErrorState -> {
+                is ErrorResult -> {
                     changeViewsState(binding.root, ENABLE)
-                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

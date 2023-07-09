@@ -13,29 +13,26 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.messenger.cnc.data.models.User
-import com.messenger.cnc.domain.PendingState
-import com.messenger.cnc.domain.State
-import com.messenger.cnc.domain.SuccessState
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.Result
+import com.messenger.cnc.domain.state.SuccessResult
 
 class FriendsScreenViewModel : ViewModel() {
-    private val _stateLiveData = MutableLiveData<State>()
-    val stateLiveData: LiveData<State> = _stateLiveData
-
-    private val _userFriendsListLiveData = MutableLiveData<List<User>>()
-    val userFriendsListLiveData: LiveData<List<User>> = _userFriendsListLiveData
+    private val _resultLiveData = MutableLiveData<Result<List<User>>>()
+    val resultLiveData: LiveData<Result<List<User>>> = _resultLiveData
 
     // database instances
     private var auth: FirebaseAuth
     private var friendsDatabaseReference: DatabaseReference
     init {
         auth = Firebase.auth
-        friendsDatabaseReference = Firebase.database.getReference("users-friends/${auth.uid}")
+        friendsDatabaseReference = Firebase.database.getReference(DATABASE_FRIENDS_FOLDER_PATH + auth.uid)
     }
 
     fun getUsers() {
         // retrieve users
         // TODO when users is not downloaded - show progressbar
-        _stateLiveData.postValue(PendingState())
+        _resultLiveData.postValue(PendingResult())
         friendsDatabaseReference.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val users = ArrayList<User>()
@@ -45,8 +42,7 @@ class FriendsScreenViewModel : ViewModel() {
                     if (user != null) {
                         users.add(user)
                     }
-                    _stateLiveData.postValue(SuccessState())
-                    _userFriendsListLiveData.postValue(users)
+                    _resultLiveData.postValue(SuccessResult(users))
                 }
             }
 
@@ -57,7 +53,7 @@ class FriendsScreenViewModel : ViewModel() {
     }
 
     companion object {
-        private const val DATABASE_FRIENDS_FOLDER_PATH = "users-friends"
+        private const val DATABASE_FRIENDS_FOLDER_PATH = "users-friends/"
         private const val TAG = "FriendsScreenViewModel"
     }
 }

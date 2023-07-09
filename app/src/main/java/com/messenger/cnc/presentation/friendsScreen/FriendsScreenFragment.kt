@@ -1,6 +1,7 @@
 package com.messenger.cnc.presentation.friendsScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.messenger.cnc.R
 import com.messenger.cnc.databinding.FragmentFriendsScreenBinding
 import com.messenger.cnc.domain.base.BaseFragment
+import com.messenger.cnc.domain.state.ErrorResult
+import com.messenger.cnc.domain.state.PendingResult
+import com.messenger.cnc.domain.state.SuccessResult
 
 class FriendsScreenFragment: BaseFragment() {
     private lateinit var binding: FragmentFriendsScreenBinding
@@ -32,8 +36,14 @@ class FriendsScreenFragment: BaseFragment() {
         setupFriendsList()
 
         // TODO: PendingState - show progressbar, SuccessState - get list from this object and disable progressbar
-        viewModel.userFriendsListLiveData.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.resultLiveData.observe(viewLifecycleOwner) {result ->
+            when(result) {
+                is PendingResult -> {
+
+                } // TODO show progressbar
+                is SuccessResult -> adapter.submitList(result.data)
+                is ErrorResult -> Log.d(TAG, "Error: ${result.error}")
+            }
         }
 
         binding.searchFriend.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
