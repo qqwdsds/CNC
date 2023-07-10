@@ -8,6 +8,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.messenger.cnc.databinding.ActivityMainBinding
 
+fun log(message: String) {
+    Log.d("Here", message)
+}
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

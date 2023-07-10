@@ -1,7 +1,6 @@
 package com.messenger.cnc.presentation.friendsScreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.messenger.cnc.domain.base.BaseFragment
 import com.messenger.cnc.domain.state.ErrorResult
 import com.messenger.cnc.domain.state.PendingResult
 import com.messenger.cnc.domain.state.SuccessResult
+import com.messenger.cnc.presentation.log
 
 class FriendsScreenFragment: BaseFragment() {
     private lateinit var binding: FragmentFriendsScreenBinding
@@ -39,10 +39,21 @@ class FriendsScreenFragment: BaseFragment() {
         viewModel.resultLiveData.observe(viewLifecycleOwner) {result ->
             when(result) {
                 is PendingResult -> {
-
-                } // TODO show progressbar
-                is SuccessResult -> adapter.submitList(result.data)
-                is ErrorResult -> Log.d(TAG, "Error: ${result.error}")
+                    log("Get user list: PendingResult()")
+                    binding.rvFriends.visibility = View.GONE
+                    binding.progressbar.visibility = View.VISIBLE
+                }
+                is SuccessResult -> {
+                    log("Get user list: take user list to adapter")
+                    binding.rvFriends.visibility = View.VISIBLE
+                    binding.progressbar.visibility = View.GONE
+                    adapter.submitList(result.data)
+                }
+                is ErrorResult -> {
+                    log("Get user list: ErrorResult(${result.error.message})")
+                    binding.rvFriends.visibility = View.VISIBLE
+                    binding.progressbar.visibility = View.GONE
+                }
             }
         }
 
@@ -60,11 +71,14 @@ class FriendsScreenFragment: BaseFragment() {
 
     }// end onViewCreated
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUsers()
+    }
+
     private fun setupFriendsList() {
         binding.rvFriends.adapter = adapter
         binding.rvFriends.layoutManager = LinearLayoutManager(requireContext())
-
-        viewModel.getUsers()
 
         // TODO mock
         /*adapter.setList(mutableListOf(
@@ -81,9 +95,5 @@ class FriendsScreenFragment: BaseFragment() {
         binding.addFriendButton.setOnClickListener {
             findNavController().navigate(R.id.action_friendsScreenFragment_to_findFrienndsScreenFragment)
         }
-    }
-
-    companion object {
-        private const val TAG = "FriendsScreenFragment"
     }
 }

@@ -104,6 +104,17 @@
         android:id="@+id/rv_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         tools:listitem="@layout/friends_item" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        style="@style/SpinKitView.Circle"
+        app:SpinKit_Color="@color/green"/>
 
 </LinearLayout>
