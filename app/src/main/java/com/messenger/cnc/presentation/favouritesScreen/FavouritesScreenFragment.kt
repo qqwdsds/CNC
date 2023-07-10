@@ -21,8 +21,6 @@ class FavouritesScreenFragment : Fragment(R.layout.fragment_favourite_sceen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.closeWindowButton.setOnClickListener{
-            findNavController().popBackStack()
-        }
+
     }// end onViewCreated
 }

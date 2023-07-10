@@ -1,4 +1,11 @@
 package com.messenger.cnc.presentation
+import com.messenger.cnc.R
+import com.messenger.cnc.presentation.LogRegActivity
+import com.messenger.cnc.presentation.favouritesScreen.FavouritesScreenFragment
+import com.messenger.cnc.presentation.friendsScreen.FriendsScreenFragment
+import com.messenger.cnc.presentation.homeScreen.HomeScreenFragment
+
+
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,5 +34,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LogRegActivity::class.java))
         }
 
+
+        binding.bottomNavigation.background = null
+        binding.bottomNavigation.menu.getItem(2).isEnabled = false
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.miFavourites -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, FavouritesScreenFragment()).commit()
+
+                R.id.miFriends -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, FriendsScreenFragment()).commit()
+
+                R.id.miChat -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, HomeScreenFragment()).commit()
+            }
+            true
+
     }// end onCreate
+}
 }
